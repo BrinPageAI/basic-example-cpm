@@ -11,8 +11,8 @@ const LICENSE =
 const LOCAL = process.env.BRINPAGE_SDK_ORIGIN || process.env.IA_STUDIO_ORIGIN || 'http://localhost:3027';
 
 function resolveAskUrl() {
-  if (LICENSE) return `${CLOUD}/api/sdk/ask`; // Cloud oficial
-  return `${LOCAL}/api/ask`;                  // Fallback dev local
+  if (LICENSE) return `${CLOUD}/api/sdk/ask`; 
+  return `${LOCAL}/api/ask`;
 }
 
 function toQuestion(messages?: ChatMessage[]) {
@@ -31,9 +31,8 @@ export async function ask(opts: {
   model?: string;
   stream?: boolean;
   context?: Record<string, unknown>;
-  // 🔽 añadimos soporte para contexto pinneado y debug
-  extraPrompts?: string[];   // ej: ["tests/apple-context-check.md"]
-  debugEcho?: boolean;       // true para ver system en respuesta
+  extraPrompts?: string[];   
+  debugEcho?: boolean;
 }) {
   const q = (opts.question ?? toQuestion(opts.messages)).trim();
   if (!q) throw new Error("Missing 'question' input");
@@ -57,7 +56,6 @@ export async function ask(opts: {
       model: opts.model,
       stream: Boolean(opts.stream),
       context: opts.context ?? {},
-      // 🔽 pasamos a Cloud los módulos y el debug
       extraPrompts: opts.extraPrompts,
       debugEcho: opts.debugEcho,
     }),
